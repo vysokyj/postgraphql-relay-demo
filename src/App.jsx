@@ -29,7 +29,7 @@ class App extends Component {
             } else if (props) {
               console.log(props.postById);
               //return <Feed data={props.feed} />;
-              return <p>Přísěvek č. 3 je: {props.postById.headline}</p>
+              return <p>Příspěvek č. 3 je: {props.postById.headline}</p>
             }
             return <div>Načítám...</div>;
           }}
