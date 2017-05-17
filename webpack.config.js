@@ -1,9 +1,11 @@
 "use strict";
 
+var path = require("path");
 var webpack = require("webpack");
 var yargs = require("yargs");
 var pjson = require("./package.json");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
+var RelayCompilerWebpackPlugin = require("relay-compiler-webpack-plugin")
 
 var args = yargs.alias("p", "production").argv;
 var environment = args.production ? "production" : "development";
@@ -113,6 +115,12 @@ var occurenceOrderPlugin = new webpack.optimize.OccurrenceOrderPlugin();
 var hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 var noErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
 
+var relayCompilerPlugin = new RelayCompilerWebpackPlugin({
+  schema: path.resolve(__dirname, "./schema.graphql"), // or schema.json
+  src: path.resolve(__dirname, "./src"),
+  extensions: ["js", "jsx"]
+});
+
 
 // -----------------------------------------------------------------------------
 // Configure variables by environment
@@ -123,12 +131,14 @@ var plugins = dev ? [
     definePlugin,
     occurenceOrderPlugin,
     hotModuleReplacementPlugin,
-    noErrorsPlugin
+    noErrorsPlugin,
+    relayCompilerPlugin
 ] : [
     loaderOptionsPlugin,
     uglifyPlugin,
     htmlProPlugin,
-    definePlugin
+    definePlugin,
+    relayCompilerPlugin
 ];
 //TODO: Check differences between eval-source-map and cheap-module-eval-source-map
 //var devtool = dev ? "eval-source-map" : ""; // = sources map for Chrome
