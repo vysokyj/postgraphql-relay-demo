@@ -3,8 +3,8 @@
  *   relay-compiler-webpack-plugin
  *
  * @providesModule AppQuery.graphql
- * @generated SignedSource<<0f3d5b57b5ac39881387a834b6ea9aa8>>
- * @relayHash eedcbbcec188b58a799bef519cdbf679
+ * @generated SignedSource<<d179a156d1cc37d83a72a5a72d27f14f>>
+ * @relayHash c6a4151d31405a964a2f0cdee8d57851
  * @flow
  * @nogrep
  */
@@ -21,8 +21,15 @@ import type {ConcreteBatch} from 'relay-runtime';
 
 /*
 query AppQuery {
-  postById(id: 3) {
-    headline
+  allPosts(first: 5) {
+    totalCount
+    nodes {
+      id
+      rowId
+      headline
+      body
+      topic
+    }
   }
 }
 */
@@ -40,24 +47,70 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Literal",
-            "name": "id",
-            "value": 3,
-            "type": "Int!"
+            "name": "first",
+            "value": 5,
+            "type": "Int"
           }
         ],
-        "concreteType": "Post",
-        "name": "postById",
+        "concreteType": "PostsConnection",
+        "name": "allPosts",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "headline",
+            "name": "totalCount",
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "name": "nodes",
+            "plural": true,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "rowId",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "headline",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "body",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "topic",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
-        "storageKey": "postById{\"id\":3}"
+        "storageKey": "allPosts{\"first\":5}"
       }
     ],
     "type": "Query"
@@ -78,28 +131,74 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Literal",
-            "name": "id",
-            "value": 3,
-            "type": "Int!"
+            "name": "first",
+            "value": 5,
+            "type": "Int"
           }
         ],
-        "concreteType": "Post",
-        "name": "postById",
+        "concreteType": "PostsConnection",
+        "name": "allPosts",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "headline",
+            "name": "totalCount",
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "name": "nodes",
+            "plural": true,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "rowId",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "headline",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "body",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "topic",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
-        "storageKey": "postById{\"id\":3}"
+        "storageKey": "allPosts{\"first\":5}"
       }
     ]
   },
-  "text": "query AppQuery {\n  postById(id: 3) {\n    headline\n  }\n}\n"
+  "text": "query AppQuery {\n  allPosts(first: 5) {\n    totalCount\n    nodes {\n      id\n      rowId\n      headline\n      body\n      topic\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

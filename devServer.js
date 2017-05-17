@@ -17,7 +17,10 @@ app.use(require("webpack-dev-middleware")(compiler, {
 
 app.use(require("webpack-hot-middleware")(compiler));
 
-app.use(postgraphql("postgres://localhost:5432", "forum_example"))
+app.use(postgraphql("postgres://localhost:5432", "forum_example", {
+  classicIds: true,
+  enableCors: true
+}))
 
 app.get("*", function (req, res, next) {
     req.url = "index.html"; // file don't exist on disc in dev mode

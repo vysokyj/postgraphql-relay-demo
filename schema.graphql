@@ -86,14 +86,14 @@ scalar Cursor
 # 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
 scalar Datetime
 
-# All input for the `deletePersonById` mutation.
-input DeletePersonByIdInput {
+# All input for the `deletePersonByRowId` mutation.
+input DeletePersonByRowIdInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
   # payload verbatim. May be used to track mutations by the client.
   clientMutationId: String
 
   # The primary unique identifier for the person.
-  id: Int!
+  rowId: Int!
 }
 
 # All input for the `deletePerson` mutation.
@@ -103,7 +103,7 @@ input DeletePersonInput {
   clientMutationId: String
 
   # The globally unique `ID` which will identify a single `Person` to be deleted.
-  nodeId: ID!
+  id: ID!
 }
 
 # The output of our `deletePerson` mutation.
@@ -118,14 +118,14 @@ type DeletePersonPayload {
   query: Query
 }
 
-# All input for the `deletePostById` mutation.
-input DeletePostByIdInput {
+# All input for the `deletePostByRowId` mutation.
+input DeletePostByRowIdInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
   # payload verbatim. May be used to track mutations by the client.
   clientMutationId: String
 
   # The primary key for the post.
-  id: Int!
+  rowId: Int!
 }
 
 # All input for the `deletePost` mutation.
@@ -135,7 +135,7 @@ input DeletePostInput {
   clientMutationId: String
 
   # The globally unique `ID` which will identify a single `Post` to be deleted.
-  nodeId: ID!
+  id: ID!
 }
 
 # The output of our `deletePost` mutation.
@@ -185,9 +185,9 @@ type Mutation {
   ): UpdatePersonPayload
 
   # Updates a single `Person` using a unique key and a patch.
-  updatePersonById(
+  updatePersonByRowId(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    input: UpdatePersonByIdInput!
+    input: UpdatePersonByRowIdInput!
   ): UpdatePersonPayload
 
   # Deletes a single `Person` using its globally unique id.
@@ -197,9 +197,9 @@ type Mutation {
   ): DeletePersonPayload
 
   # Deletes a single `Person` using a unique key.
-  deletePersonById(
+  deletePersonByRowId(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    input: DeletePersonByIdInput!
+    input: DeletePersonByRowIdInput!
   ): DeletePersonPayload
 
   # Creates a single `Post`.
@@ -215,9 +215,9 @@ type Mutation {
   ): UpdatePostPayload
 
   # Updates a single `Post` using a unique key and a patch.
-  updatePostById(
+  updatePostByRowId(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    input: UpdatePostByIdInput!
+    input: UpdatePostByRowIdInput!
   ): UpdatePostPayload
 
   # Deletes a single `Post` using its globally unique id.
@@ -227,16 +227,16 @@ type Mutation {
   ): DeletePostPayload
 
   # Deletes a single `Post` using a unique key.
-  deletePostById(
+  deletePostByRowId(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    input: DeletePostByIdInput!
+    input: DeletePostByRowIdInput!
   ): DeletePostPayload
 }
 
 # An object with a globally unique `ID`.
 interface Node {
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
-  nodeId: ID!
+  id: ID!
 }
 
 # Information about pagination in a connection.
@@ -300,10 +300,10 @@ enum PeopleOrderBy {
 # A user of the forum.
 type Person implements Node {
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
-  nodeId: ID!
+  id: ID!
 
   # The primary unique identifier for the person.
-  id: Int!
+  rowId: Int!
 
   # The person’s first name.
   firstName: String!
@@ -352,8 +352,8 @@ type Person implements Node {
 
 # A condition to be used against `Person` object types. All fields are tested for equality and combined with a logical ‘and.’
 input PersonCondition {
-  # Checks for equality with the object’s `id` field.
-  id: Int
+  # Checks for equality with the object’s `rowId` field.
+  rowId: Int
 
   # Checks for equality with the object’s `firstName` field.
   firstName: String
@@ -374,7 +374,7 @@ input PersonCondition {
 # A user of the forum.
 input PersonInput {
   # The primary unique identifier for the person.
-  id: Int
+  rowId: Int
 
   # The person’s first name.
   firstName: String!
@@ -393,7 +393,7 @@ input PersonInput {
 # Represents an update to a `Person`. Fields that are set will be updated.
 input PersonPatch {
   # The primary unique identifier for the person.
-  id: Int
+  rowId: Int
 
   # The person’s first name.
   firstName: String
@@ -412,10 +412,10 @@ input PersonPatch {
 # A forum post written by a user.
 type Post implements Node {
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
-  nodeId: ID!
+  id: ID!
 
   # The primary key for the post.
-  id: Int!
+  rowId: Int!
 
   # The id of the author user.
   authorId: Int!
@@ -442,8 +442,8 @@ type Post implements Node {
 
 # A condition to be used against `Post` object types. All fields are tested for equality and combined with a logical ‘and.’
 input PostCondition {
-  # Checks for equality with the object’s `id` field.
-  id: Int
+  # Checks for equality with the object’s `rowId` field.
+  rowId: Int
 
   # Checks for equality with the object’s `authorId` field.
   authorId: Int
@@ -467,7 +467,7 @@ input PostCondition {
 # A forum post written by a user.
 input PostInput {
   # The primary key for the post.
-  id: Int
+  rowId: Int
 
   # The id of the author user.
   authorId: Int!
@@ -489,7 +489,7 @@ input PostInput {
 # Represents an update to a `Post`. Fields that are set will be updated.
 input PostPatch {
   # The primary key for the post.
-  id: Int
+  rowId: Int
 
   # The id of the author user.
   authorId: Int
@@ -565,7 +565,7 @@ type Query implements Node {
   # Fetches an object given its globally unique `ID`.
   node(
     # The globally unique `ID`.
-    nodeId: ID!
+    id: ID!
   ): Node
 
   # Gets the person who was identified by our JWT.
@@ -622,11 +622,11 @@ type Query implements Node {
   # Reads a single `Person` using its globally unique `ID`.
   person(
     # The globally unique `ID` to be used in selecting a single `Person`.
-    nodeId: ID!
+    id: ID!
   ): Person
-  personById(
+  personByRowId(
     # The primary unique identifier for the person.
-    id: Int!
+    rowId: Int!
   ): Person
 
   # Reads and enables paginatation through a set of `Post`.
@@ -657,11 +657,11 @@ type Query implements Node {
   # Reads a single `Post` using its globally unique `ID`.
   post(
     # The globally unique `ID` to be used in selecting a single `Post`.
-    nodeId: ID!
+    id: ID!
   ): Post
-  postById(
+  postByRowId(
     # The primary key for the post.
-    id: Int!
+    rowId: Int!
   ): Post
 
   # Exposes the root query type nested one level down. This is helpful for Relay 1
@@ -669,7 +669,7 @@ type Query implements Node {
   query: Query!
 
   # The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.
-  nodeId: ID!
+  id: ID!
 }
 
 # All input for the `registerPerson` mutation.
@@ -729,14 +729,14 @@ enum SearchPostsOrderBy {
   NATURAL
 }
 
-# All input for the `updatePersonById` mutation.
-input UpdatePersonByIdInput {
+# All input for the `updatePersonByRowId` mutation.
+input UpdatePersonByRowIdInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
   # payload verbatim. May be used to track mutations by the client.
   clientMutationId: String
 
   # The primary unique identifier for the person.
-  id: Int!
+  rowId: Int!
 
   # An object where the defined keys will be set on the `Person` identified by our unique key.
   personPatch: PersonPatch!
@@ -749,7 +749,7 @@ input UpdatePersonInput {
   clientMutationId: String
 
   # The globally unique `ID` which will identify a single `Person` to be updated.
-  nodeId: ID!
+  id: ID!
 
   # An object where the defined keys will be set on the `Person` identified by our globally unique `ID`.
   personPatch: PersonPatch!
@@ -766,14 +766,14 @@ type UpdatePersonPayload {
   query: Query
 }
 
-# All input for the `updatePostById` mutation.
-input UpdatePostByIdInput {
+# All input for the `updatePostByRowId` mutation.
+input UpdatePostByRowIdInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
   # payload verbatim. May be used to track mutations by the client.
   clientMutationId: String
 
   # The primary key for the post.
-  id: Int!
+  rowId: Int!
 
   # An object where the defined keys will be set on the `Post` identified by our unique key.
   postPatch: PostPatch!
@@ -786,7 +786,7 @@ input UpdatePostInput {
   clientMutationId: String
 
   # The globally unique `ID` which will identify a single `Post` to be updated.
-  nodeId: ID!
+  id: ID!
 
   # An object where the defined keys will be set on the `Post` identified by our globally unique `ID`.
   postPatch: PostPatch!
