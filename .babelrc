@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "syntax-class-properties",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "relay"
+  ],
+  "presets": [
+    "stage-1",
+    "es2015",
+    "react"
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  }
+}
